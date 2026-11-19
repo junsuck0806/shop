@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ROYAL CHRONO | 프리미엄 워치 셀렉트숍</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0A192F;--deep:#050d1c;--royal:#1D4ED8;--gold:#D4AF37;--white:#F8FAFC;--ink:#14213a;--mut:#6b778c;--ln:#e3e7ee;--serif:'Cormorant Garamond','Noto Serif KR',serif;--kr:'Noto Serif KR','Cormorant Garamond',serif}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body{font:400 14.5px/1.7 'Noto Sans KR',system-ui,sans-serif;color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased}
+::selection{background:var(--gold);color:var(--deep)}
+img{display:block;max-width:100%}button{font:inherit;cursor:pointer;border:0}
+input,select,textarea{font:inherit;padding:11px 12px;border:0;border-bottom:1px solid #c5cdda;width:100%;background:#fff;border-radius:0}input:focus,select:focus,textarea:focus{outline:0;border-bottom-color:var(--gold)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.bar{background:var(--deep);color:var(--gold);text-align:center;padding:9px 12px;font-size:12px;letter-spacing:.14em;font-weight:300}
+header{position:sticky;top:0;z-index:30;background:rgba(5,13,28,.9);backdrop-filter:blur(12px);border-bottom:1px solid rgba(212,175,55,.25);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:14px 5vw}
+.logo{font:600 24px var(--serif);letter-spacing:.32em;color:var(--gold);text-decoration:none}.logo b{font-weight:600;color:var(--white)}
+.nv{display:flex;gap:36px}.nv a{color:#cbd5e1;text-decoration:none;font-size:13px;letter-spacing:.14em;position:relative;padding:4px 0}.nv a:after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--gold);transition:width .3s}.nv a:hover{color:#fff}.nv a:hover:after{width:100%}
+.hr{display:flex;gap:10px;justify-content:flex-end}@media(max-width:860px){header{grid-template-columns:1fr auto}.nv{display:none}}
+.btn{background:var(--navy);color:var(--white);padding:13px 28px;font-weight:500;letter-spacing:.08em;border:1px solid var(--navy);transition:background .25s,color .25s,transform .2s}.btn:hover{background:var(--gold);color:var(--deep);border-color:var(--gold)}
+.btn.gold{background:var(--gold);color:var(--deep);border-color:var(--gold)}.btn.gold:hover{background:var(--white);border-color:var(--white)}.btn.ln{background:none;color:var(--navy)}.btn.ln:hover{background:var(--navy);color:var(--gold)}.btn.sm{padding:7px 16px;font-size:12px}
+header .btn.ln{color:var(--gold);border-color:rgba(212,175,55,.55)}header .btn.ln:hover{background:var(--gold);color:var(--deep)}
+.hero{position:relative;height:min(88vh,720px);background:var(--deep);overflow:hidden}
+.sl{position:absolute;inset:0;opacity:0;transition:opacity 1.2s}.sl.on{opacity:1}
+.bg{position:absolute;inset:-3%;transition:transform .5s ease-out}.bg img{width:100%;height:100%;object-fit:cover;object-position:72% 50%;filter:contrast(1.08) saturate(.9) brightness(.92)}.sl.on .bg img{animation:kb 9s ease-out forwards}@keyframes kb{from{transform:scale(1.12)}to{transform:scale(1)}}
+.bg:after{content:"";position:absolute;inset:0;background:radial-gradient(circle 340px at var(--mx,72%) var(--my,50%),rgba(212,175,55,.2),transparent 70%),radial-gradient(circle 760px at var(--mx,72%) var(--my,50%),transparent 0,rgba(3,8,18,.7) 100%)}
+.sl:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(5,13,28,.92) 0,rgba(5,13,28,.45) 48%,transparent 75%)}
+.cp{position:absolute;z-index:2;left:7vw;top:50%;transform:translateY(-50%);color:#fff;max-width:min(720px,86vw);word-break:keep-all}
+.cp h2{font:300 clamp(34px,5vw,62px)/1.28 var(--kr);letter-spacing:-.01em;margin-bottom:18px}.cp h2:after{content:"";display:block;width:56px;height:1px;background:var(--gold);margin-top:22px}.cp p{color:#b9c4d6;margin-bottom:30px;font-weight:300;letter-spacing:.04em}
+.ar{position:absolute;z-index:3;top:50%;width:46px;height:46px;border-radius:50%;background:none;border:1px solid rgba(212,175,55,.5);color:var(--gold);font-size:20px;transition:background .25s}.ar:hover{background:var(--gold);color:var(--deep)}.ar.l{left:2vw}.ar.r{right:2vw}
+.dots{position:absolute;z-index:3;bottom:26px;left:7vw;display:flex;gap:10px}.dots i{width:36px;height:2px;background:rgba(255,255,255,.3);cursor:pointer}.dots i.on{background:var(--gold)}
+section{padding:96px 5vw}h3.t{font:400 clamp(30px,3.6vw,44px)/1.2 var(--kr);color:var(--navy);margin-bottom:14px}h3.t:after{content:"";display:block;width:48px;height:1px;background:var(--gold);margin-top:16px}.sub{color:var(--mut);margin-bottom:44px;font-weight:300}
+.rank{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));column-gap:36px;border-top:1px solid var(--ln)}
+.rk{display:flex;gap:16px;align-items:center;padding:20px 4px;border-bottom:1px solid var(--ln);cursor:pointer}.rk img{width:84px;height:84px;object-fit:cover}.rk b{font:500 52px var(--serif);color:var(--gold);width:42px;line-height:1}.rk small{font-size:14px;color:var(--ink)}
+.tabs{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;margin-bottom:40px;border-bottom:1px solid var(--ln)}.tabs div{display:flex;gap:30px;flex-wrap:wrap}
+.tab{background:none;padding:12px 0;color:var(--mut);letter-spacing:.06em;border-bottom:2px solid transparent;margin-bottom:-1px}.tab:hover{color:var(--navy)}.tab.on{color:var(--navy);border-color:var(--gold);font-weight:500}.tabs select{width:auto;border:0;color:var(--mut);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:44px 28px}
+.card{cursor:pointer;text-align:center}.card .im{position:relative;aspect-ratio:1;background:radial-gradient(circle at 50% 40%,#16345f,var(--deep));overflow:hidden;transition:transform .15s ease-out,box-shadow .3s;will-change:transform;box-shadow:0 18px 40px -22px rgba(5,13,28,.6)}
+.card img{width:100%;height:100%;object-fit:cover;filter:contrast(1.06) saturate(.95);transition:transform .8s}.card:hover img{transform:scale(1.05)}
+.gl{position:absolute;inset:0;background:radial-gradient(circle 230px at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.24),transparent 65%);opacity:0;transition:opacity .3s;pointer-events:none}.tl:hover .gl{opacity:1}
+.bd{position:absolute;top:0;left:0;background:var(--gold);color:var(--deep);font-size:11px;font-weight:700;padding:4px 12px;letter-spacing:.06em;z-index:2}
+.card .in{padding:18px 6px 0}.card small{color:var(--mut);display:block;font-size:12px;letter-spacing:.04em}.card h4{font:500 22px var(--serif);color:var(--navy);margin:2px 0 4px}
+.pr s{color:var(--mut);font-size:13px;margin-right:8px}.pr b{color:var(--royal);font-size:17px;font-weight:500}.pr em{color:#9a7b12;font-style:normal;font-weight:600;margin-right:8px}
+.phil{background:radial-gradient(circle 520px at var(--mx,50%) var(--my,40%),rgba(29,78,216,.28),transparent 70%),var(--deep);color:var(--white);text-align:center;padding:120px 5vw}.phil h3.t{color:var(--white);max-width:780px;margin:0 auto 18px}.phil h3.t:after{margin:16px auto 0}.phil p{max-width:620px;margin:0 auto;color:#b9c4d6;font-weight:300}
+.vals{display:flex;gap:0;justify-content:center;margin-top:60px;flex-wrap:wrap}.vals div{padding:6px 40px;width:280px;border-left:1px solid rgba(212,175,55,.3)}.vals div:first-child{border:0}.vals b{font:500 22px var(--serif);color:var(--gold);display:block}
+footer{background:#030812;color:#8a97ac;padding:64px 5vw;font-size:13px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px;border-top:1px solid rgba(212,175,55,.25)}footer h5{font:500 20px var(--serif);color:var(--gold);margin-bottom:10px;letter-spacing:.1em}
+.ov{position:fixed;inset:0;background:rgba(3,8,18,.78);backdrop-filter:blur(6px);z-index:50;display:none;align-items:flex-start;justify-content:center;overflow:auto;padding:4vh 3vw}.ov.on{display:flex}
+.md{background:#fff;width:min(980px,100%);padding:36px;position:relative;border-top:2px solid var(--gold)}.md.s{width:min(480px,100%)}
+.x{position:absolute;right:16px;top:8px;background:none;font-size:30px;color:var(--mut)}
+.dt{display:grid;grid-template-columns:1fr 1fr;gap:36px}@media(max-width:760px){.dt{grid-template-columns:1fr}.md{padding:24px 18px}}
+.gm{aspect-ratio:1;overflow:hidden;background:var(--deep)}.gm img{width:100%;height:100%;object-fit:cover;transition:transform .25s ease-out}
+.th{display:flex;gap:8px;margin-top:8px}.th img{width:25%;aspect-ratio:1;object-fit:cover;cursor:pointer;border:1px solid transparent;opacity:.65}.th img.on{border-color:var(--gold);opacity:1}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}td{padding:9px 0;border-bottom:1px solid var(--ln)}td:first-child{color:var(--mut);width:35%}
+.rv{border-top:1px solid var(--ln);padding:14px 0}.rv img{width:90px;margin-top:6px}.st{color:var(--gold);letter-spacing:2px}
+label{display:block;font-size:12px;color:var(--mut);margin:14px 0 2px;letter-spacing:.06em}
+.dw{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:#fff;z-index:60;transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(0,0,0,.35);border-left:2px solid var(--gold)}.dw.on{transform:none}
+.dw .bd2{flex:1;overflow:auto;padding:16px 20px}.ci{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--ln)}.ci img{width:74px;height:74px;object-fit:cover}
+.q{display:inline-flex;align-items:center;gap:10px;margin-top:4px}.q button{width:26px;height:26px;background:var(--white);border:1px solid var(--ln)}
+.sum{background:var(--white);border:1px solid var(--ln);padding:16px;margin:16px 0}.sum p{display:flex;justify-content:space-between}.sum .big{font-weight:700;font-size:18px;color:var(--royal)}
+.wc{border:1px solid var(--gold);outline:1px solid rgba(212,175,55,.4);outline-offset:6px;background:radial-gradient(circle at 20% 0,#16345f,var(--deep));color:var(--white);padding:34px;text-align:center}
+.wc h4{font:500 28px var(--serif);color:var(--gold);letter-spacing:.2em}.wc .sn{font:600 26px var(--serif);letter-spacing:.14em;margin:10px 0}.wc table td{border-color:#27406a;color:#e2e8f0;text-align:left}.wc td:first-child{color:var(--gold)}
+.gd h5{color:var(--navy);margin:16px 0 2px;font-size:16px}.gd p{font-size:14px;color:#475569}
+.tg{display:inline-block;background:var(--navy);color:var(--gold);padding:2px 12px;font-size:12px;font-weight:700;letter-spacing:.06em}
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:var(--navy);color:var(--gold);padding:13px 26px;z-index:300;display:none;border:1px solid var(--gold)}
+#cr,#cd{position:fixed;left:0;top:0;pointer-events:none;z-index:200;display:none}body.fx #cr,body.fx #cd{display:block}body.fx,body.fx *{cursor:none!important}
+#cr{width:38px;height:38px;margin:-19px 0 0 -19px;border:1px solid var(--gold);border-radius:50%;transition:width .25s,height .25s,margin .25s,background .25s;display:none;align-items:center;justify-content:center;color:var(--deep);font-size:12px;font-weight:700;letter-spacing:.08em}
+body.fx #cr{display:flex}#cr.h{width:64px;height:64px;margin:-32px 0 0 -32px;background:rgba(212,175,55,.16)}#cr.v{width:84px;height:84px;margin:-42px 0 0 -42px;background:var(--gold)}#cr.v:after{content:"보기"}
+#cd{width:6px;height:6px;margin:-3px 0 0 -3px;background:var(--gold);border-radius:50%}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body>
+<div class="bar">무료 당일 발송 · 전 제품 2년 공식 보증 · 신규 가입 3,000P 즉시 지급</div>
+<header><a class="logo" href="#" style="text-decoration:none">ROYAL <b>CHRONO</b></a>
+<nav class="nv"><a href="#best">베스트셀러</a><a href="#shop">컬렉션</a><a href="#brand">브랜드</a><a href="#cs">고객센터</a></nav><div class="hr"><button class="btn ln sm" id="ub" onclick="acct()">로그인</button><button class="btn sm" onclick="oc()">장바구니 <span id="cn">0</span></button></div></header>
+<div class="hero" id="hero" data-spot></div>
+<section id="best"><h3 class="t">베스트셀러 랭킹</h3><p class="sub">지금 가장 많이 선택된 모델입니다.</p><div class="rank" id="rank"></div></section>
+<section id="shop" style="background:#fff"><h3 class="t">컬렉션</h3><p class="sub">오토매틱 드레스 워치부터 교체용 스트랩까지.</p>
+<div class="tabs"><div id="tabs"></div><select id="so" onchange="sort=this.value;rg()" aria-label="정렬"><option value="best">베스트순</option><option value="new">신상품순</option><option value="low">낮은가격순</option></select></div><div class="grid" id="grid"></div></section>
+<section class="phil" id="brand" data-spot><h3 class="t">시간을 소유하는 가장 정직한 방법</h3><p>ROYAL CHRONO는 스위스·일본 무브먼트 공방과 직접 거래하는 셀렉트숍입니다. 모든 시계는 입고 시 24시간 정확도 검수를 거쳐 출고됩니다.</p>
+<div class="vals"><div><b>정품 보증</b><br>고유 시리얼 디지털 보증서</div><div><b>2년 공식 보증</b><br>무브먼트 무상 점검</div><div><b>등급 혜택</b><br>최대 5% 적립, 오버홀 쿠폰</div></div></section>
+<footer id="cs"><div><h5>고객센터</h5>1588-0000<br>평일 10:00–18:00 (점심 12:30–13:30)<br>help@royalchrono.example</div><div><h5>AS 안내</h5>서울 강남구 테헤란로 000, 3F AS센터<br>보증 기간 내 무브먼트 무상 수리<br>유상 수리는 견적 후 진행</div><div><h5>ROYAL CHRONO</h5>(주)로열크로노 · 대표 홍길동<br>사업자등록번호 000-00-00000<br>이 사이트는 데모용 가상 쇼핑몰입니다.</div></footer>
+<div class="ov" id="ov" onclick="if(event.target===this)cm()"><div class="md" id="mb"></div></div>
+<aside class="dw" id="dw"><div style="padding:16px;border-bottom:1px solid var(--ln);display:flex;justify-content:space-between"><b>장바구니</b><button onclick="cc()" style="background:none;font-size:22px">×</button></div><div class="bd2" id="cb"></div></aside>
+<div class="toast" id="ts"></div>
+<script>
+const ph=(id,w)=>{const cx=w?1450:400,cy=400,W=w?2000:800,sc=w?.78:.7,
+M={1:{a:'#3b68a8',b:'#0a1a38',g:'#D4AF37',z:'f',r:'j',t:'#F8FAFC',d:1,c:1,n:'AUTOMATIC  5 ATM'},
+2:{a:'#f6f0e1',b:'#c2b89d',g:'#D4AF37',z:'p',r:'l',k:'#5a3a22',t:'#0A192F',m:1,n:'MOONPHASE'},
+3:{a:'#141a26',b:'#020409',g:'#e8fff2',z:'d',r:'o',t:'#F8FAFC',d:1,c:1,n:'DIVER 300M',bz:'#1D4ED8'},
+4:{a:'#f3f5f8',b:'#b7bfcb',g:'#1D4ED8',z:'t',r:'o',t:'#0A192F',s:1,n:'CHRONOGRAPH'},
+5:{a:'#f0eadb',b:'#c8c0aa',g:'#D4AF37',z:'p',r:'l',k:'#16110e',t:'#0A192F',n:'SLIM QUARTZ',v:1},
+6:{a:'#657080',b:'#1c232e',g:'#D4AF37',z:'p',r:'m',t:'#F8FAFC',d:1,n:'SLATE DATE'}},
+m=M[id]||M[1],R=(n,f)=>{let s='';for(let k=0;k<n;k++)s+=f(k);return s},
+rot=(a,x=cx,y=cy)=>`transform="rotate(${a} ${x} ${y})"`,dk=m.t=='#0A192F',lu=dk?'url(#sh)':'#eaf2e4',ln=dk?'#2a3140':'#cfd6df';
+const df=`<defs><radialGradient id="b" cx="${cx/W}" cy=".5" r=".7"><stop offset="0" stop-color="#1a3a68"/><stop offset=".55" stop-color="#0A192F"/><stop offset="1" stop-color="#030812"/></radialGradient>
+<linearGradient id="sh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7f9fc"/><stop offset=".18" stop-color="#9aa3b0"/><stop offset=".38" stop-color="#eef1f5"/><stop offset=".55" stop-color="#6d7581"/><stop offset=".78" stop-color="#d9dee5"/><stop offset="1" stop-color="#555d69"/></linearGradient>
+<linearGradient id="gd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0b0"/><stop offset=".3" stop-color="#c79a22"/><stop offset=".55" stop-color="#f3d77a"/><stop offset="1" stop-color="#8a6510"/></linearGradient>
+<radialGradient id="dl" cx=".35" cy=".28" r=".95"><stop offset="0" stop-color="${m.a}"/><stop offset="1" stop-color="${m.b}"/></radialGradient>
+<linearGradient id="cs" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset=".25" stop-color="#fff" stop-opacity=".18"/><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset=".78" stop-color="#fff" stop-opacity=".1"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></linearGradient>
+<linearGradient id="gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/><stop offset=".8" stop-color="#fff" stop-opacity=".05"/><stop offset="1" stop-color="#fff" stop-opacity=".16"/></linearGradient>
+<radialGradient id="rs" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="302"><stop offset=".65" stop-color="#000" stop-opacity=".55"/><stop offset=".8" stop-color="#fff" stop-opacity=".22"/><stop offset=".92" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></radialGradient>
+<filter id="ds" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="30" stdDeviation="24" flood-opacity=".65"/></filter><filter id="bl"><feGaussianBlur stdDeviation="5"/></filter>
+<pattern id="po" x="${cx-125}" width="250" height="66" patternUnits="userSpaceOnUse"><rect width="250" height="66" fill="url(#sh)"/><rect x="82" width="86" height="66" fill="#fff" opacity=".22"/><path d="M82 0V66M168 0V66M0 1H250" stroke="#000" stroke-opacity=".55" stroke-width="3" fill="none"/></pattern>
+<pattern id="pj" x="${cx-125}" width="250" height="44" patternUnits="userSpaceOnUse"><rect width="250" height="44" fill="url(#sh)"/>${R(5,k=>`<ellipse cx="${25+50*k}" cy="22" rx="17" ry="17" fill="#fff" opacity=".2"/>`)}<path d="M50 0V44M100 0V44M150 0V44M200 0V44M0 1H250" stroke="#000" stroke-opacity=".5" stroke-width="2.5" fill="none"/></pattern>
+<pattern id="pm" width="9" height="9" patternUnits="userSpaceOnUse"><rect width="9" height="9" fill="#aeb5bf"/><path d="M0 9L9 0M-3 3L3-3M6 12L12 6" stroke="#5f6772" stroke-width="1.6"/><path d="M0 0L9 9M-3 6L3 12M6-3L12 3" stroke="#e0e5ec" stroke-width=".8"/></pattern></defs>`,
+bk=w?`<circle cx="420" cy="640" r="220" fill="#D4AF37" opacity=".05"/><circle cx="900" cy="160" r="130" fill="#1D4ED8" opacity=".12"/><circle cx="1800" cy="680" r="160" fill="#D4AF37" opacity=".06"/>`:'';
+let g;
+if(id>6){const lt=id==7;g=`<g filter="url(#ds)"><circle cx="${cx}" cy="${cy}" r="250" fill="none" stroke="${lt?'#6a4326':'url(#pm)'}" stroke-width="104"/><circle cx="${cx}" cy="${cy}" r="250" fill="none" stroke="url(#rs)" stroke-width="104"/>`
++(lt?`<circle cx="${cx}" cy="${cy}" r="212" fill="none" stroke="#e8d9a8" stroke-opacity=".75" stroke-width="3" stroke-dasharray="11 8"/><circle cx="${cx}" cy="${cy}" r="288" fill="none" stroke="#e8d9a8" stroke-opacity=".75" stroke-width="3" stroke-dasharray="11 8"/>`+R(7,k=>`<circle cx="${cx}" cy="${cy+250}" r="8" fill="#1a0f08" ${rot(-18+k*6)}/>`):'')
++`<rect x="${cx-66}" y="${cy-300}" width="132" height="100" rx="12" fill="url(#sh)" stroke="#000" stroke-opacity=".4" stroke-width="3"/><rect x="${cx-44}" y="${cy-282}" width="88" height="64" rx="8" fill="#0A192F" opacity=".85"/><rect x="${cx-5}" y="${cy-306}" width="10" height="112" rx="5" fill="url(#sh)"/></g>`}
+else{const bw=m.r=='l'?230:250,bf={j:'url(#pj)',o:'url(#po)',m:'url(#pm)',l:m.k}[m.r],H=1100;
+g=`<rect x="${cx-bw/2}" y="${cy-H}" width="${bw}" height="${2*H}" fill="${bf}"/><rect x="${cx-bw/2}" y="${cy-H}" width="${bw}" height="${2*H}" fill="url(#cs)"/>`;
+if(m.r=='l')g+=[-1,1].map(q=>`<path d="M${cx+q*(bw/2-16)} ${cy-H}V${cy+H}" stroke="#e8d9a8" stroke-opacity=".7" stroke-width="3" stroke-dasharray="12 9"/>`).join('');
+g+=[-1,1].map(q=>[-1,1].map(t=>`<rect x="${cx+q*(bw/2+5)-17}" y="${t<0?cy-372:cy+272}" width="34" height="100" rx="12" fill="url(#sh)" stroke="#000" stroke-opacity=".4" stroke-width="2"/>`).join('')).join('');
+g+=`<rect x="${cx+322}" y="${cy-32}" width="46" height="64" rx="9" fill="url(#sh)" stroke="#000" stroke-opacity=".4" stroke-width="2"/>`+R(5,k=>`<path d="M${cx+332+k*7} ${cy-28}V${cy+28}" stroke="#000" stroke-opacity=".4" stroke-width="2"/>`);
+if(m.s)g+=`<rect x="${cx+318}" y="${cy-124}" width="34" height="40" rx="6" fill="url(#sh)" stroke="#000" stroke-opacity=".4" stroke-width="2"/><rect x="${cx+318}" y="${cy+84}" width="34" height="40" rx="6" fill="url(#sh)" stroke="#000" stroke-opacity=".4" stroke-width="2"/>`;
+g+=`<circle cx="${cx}" cy="${cy}" r="336" fill="url(#sh)" stroke="#000" stroke-opacity=".4" stroke-width="3"/>`;
+if(m.z=='f')g+=`<circle cx="${cx}" cy="${cy}" r="324" fill="url(#gd)"/>`+R(60,k=>`<path d="M${cx-5} ${cy-324}L${cx+5} ${cy-324}L${cx} ${cy-296}Z" fill="#7a5a0e" opacity=".75" ${rot(k*6)}/>`);
+else if(m.z=='p')g+=`<circle cx="${cx}" cy="${cy}" r="322" fill="url(#sh)"/><circle cx="${cx}" cy="${cy}" r="308" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="3"/>`;
+else g+=R(120,k=>`<path d="M${cx} ${cy-336}V${cy-327}" stroke="#000" stroke-opacity=".5" stroke-width="3" ${rot(k*3)}/>`)+`<circle cx="${cx}" cy="${cy}" r="326" fill="${m.z=='d'?m.bz:'#0b0f18'}"/>`+R(60,k=>`<rect x="${cx-2}" y="${cy-318}" width="4" height="${k%5?14:30}" fill="#F8FAFC" ${rot(k*6)}/>`)+(m.z=='d'?`<circle cx="${cx}" cy="${cy-292}" r="14" fill="#eaffe6" stroke="#fff"/>`:'');
+g+=`<circle cx="${cx}" cy="${cy}" r="300" fill="url(#dl)"/>`+R(90,k=>`<path d="M${cx} ${cy}V${cy-298}" stroke="${dk?'#000':'#fff'}" stroke-opacity=".05" ${rot(k*4)}/>`)+`<circle cx="${cx}" cy="${cy}" r="299" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4"/>`;
+g+=R(60,k=>k%5?`<rect x="${cx-1.5}" y="${cy-294}" width="3" height="10" fill="${m.t}" opacity=".55" ${rot(k*6)}/>`:'');
+g+=R(12,k=>{if(m.d&&k==3||m.s&&k&&k%3==0)return'';return m.z=='d'?(k?`<circle cx="${cx}" cy="${cy-232}" r="25" fill="#eaffe6" stroke="#cfd6df" stroke-width="6" ${rot(k*30)}/>`:`<path d="M${cx-32} ${cy-205}L${cx+32} ${cy-205}L${cx} ${cy-268}Z" fill="#eaffe6" stroke="#cfd6df" stroke-width="6"/>`):`<rect x="${cx-8}" y="${cy-284}" width="16" height="${m.v?40:64}" fill="${m.z=='f'?'url(#gd)':lu}" stroke="${m.z=='f'||m.v?m.g:'#9aa3b0'}" stroke-width="3" ${rot(k*30)}/>`});
+g+=`<text x="${cx}" y="${cy-140}" fill="${dk?'#8a6510':'#D4AF37'}" font-size="30" text-anchor="middle" font-family="Georgia,serif" letter-spacing="9">ROYAL CHRONO</text><text x="${cx}" y="${cy-100}" fill="${m.t}" fill-opacity=".7" font-size="16" text-anchor="middle" font-family="Georgia,serif" letter-spacing="6">${m.n}</text>`;
+if(m.d)g+=(m.c?`<rect x="${cx+160}" y="${cy-31}" width="90" height="62" rx="6" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>`:'')+`<rect x="${cx+168}" y="${cy-21}" width="74" height="42" fill="#f8fafc" stroke="#7a8494" stroke-width="3"/><text x="${cx+205}" y="${cy+10}" fill="#0A192F" font-size="28" text-anchor="middle" font-family="Georgia,serif">${10+id*3}</text>`;
+if(m.s)g+=[[cx+140,cy,40],[cx,cy+150,200],[cx-140,cy,300]].map(([x,y,a])=>`<circle cx="${x}" cy="${y}" r="64" fill="#1a2434" stroke="url(#sh)" stroke-width="6"/>`+R(12,k=>`<rect x="${x-1.5}" y="${y-56}" width="3" height="9" fill="#fff" ${rot(k*30,x,y)}/>`)+`<path d="M${x} ${y}V${y-46}" stroke="${m.g}" stroke-width="4" ${rot(a,x,y)}/><circle cx="${x}" cy="${y}" r="5" fill="#cfd6df"/>`).join('');
+if(m.m)g+=`<circle cx="${cx}" cy="${cy+140}" r="72" fill="#0a1a38" stroke="url(#gd)" stroke-width="6"/><circle cx="${cx-14}" cy="${cy+158}" r="42" fill="url(#gd)"/><circle cx="${cx+16}" cy="${cy+150}" r="44" fill="#0a1a38"/>`+R(6,k=>`<circle cx="${cx-50+k*20}" cy="${cy+104+k%3*14}" r="2.5" fill="#D4AF37"/>`);
+const hf=dk?'url(#sh)':'#eaf2e4',hd=(a,l,wd)=>`<path d="M${cx-wd} ${cy+34}L${cx-wd} ${cy-l+40}L${cx} ${cy-l}L${cx+wd} ${cy-l+40}L${cx+wd} ${cy+34}Z" fill="${hf}" stroke="${ln}" stroke-width="3" ${rot(a)}/>`,sec=m.z=='d'?'#eaffe6':m.s?'#1D4ED8':'#D4AF37';
+g+=(m.z=='d'?`<g ${rot(305)}><rect x="${cx-12}" y="${cy-170}" width="24" height="205" fill="#eaffe6" stroke="#cfd6df" stroke-width="4"/><circle cx="${cx}" cy="${cy-118}" r="34" fill="#eaffe6" stroke="#cfd6df" stroke-width="7"/><path d="M${cx} ${cy-118}V${cy-152}M${cx} ${cy-118}L${cx-30} ${cy-100}M${cx} ${cy-118}L${cx+30} ${cy-100}" stroke="#0a0f1a" stroke-width="7"/></g>`:hd(305,175,14))+hd(60,268,10)+`<g ${rot(212)}><path d="M${cx} ${cy+80}V${cy-282}" stroke="${sec}" stroke-width="3.5"/><circle cx="${cx}" cy="${cy+54}" r="11" fill="${sec}"/></g><circle cx="${cx}" cy="${cy}" r="16" fill="url(#sh)" stroke="#000" stroke-opacity=".4" stroke-width="2"/>`;
+g+=`<circle cx="${cx}" cy="${cy}" r="300" fill="url(#gl)"/><path d="M${cx-255} ${cy-90}A272 272 0 0 1 ${cx-70} ${cy-262}" stroke="#fff" stroke-opacity=".45" stroke-width="12" stroke-linecap="round" fill="none" filter="url(#bl)"/><path d="M${cx-300} ${cy-170}A340 340 0 0 1 ${cx+60} ${cy-334}" stroke="#fff" stroke-opacity=".5" stroke-width="5" fill="none" filter="url(#bl)"/>`;
+g=`<g filter="url(#ds)" transform="translate(${cx} ${cy}) scale(${sc}) translate(${-cx} ${-cy})">${g}</g>`}
+return 'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} 800">${df}<rect width="${W}" height="800" fill="url(#b)"/>${bk}${g}</svg>`)};
+const im=(s,i,st='')=>`<img src="${s}" alt="" loading="lazy" style="${st}" onerror="this.onerror=null;this.src=ph(${i})">`;
+const L=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},S=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){tt('저장 공간이 부족합니다.')}};
+const won=n=>n.toLocaleString('ko-KR')+'원',esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),$=id=>document.getElementById(id);
+const CATS=[['all','전체'],['dress','오토매틱 드레스'],['diver','다이버·크로노그래프'],['quartz','미니멀 쿼츠'],['strap','프리미엄 스트랩']];
+const ST=[['기본 스트랩',0],['블랙 카프 가죽 스트랩',30000],['스틸 브레이슬릿',80000]];
+const P=[
+{id:1,c:'dress',nm:'Heritage Automatic 40',pr:1290000,sp:1090000,mv:'오토매틱 Cal.RC-80 (파워리저브 80h)',d:'40mm',w:'5ATM',g:'사파이어 크리스탈',b:98,dt:5},
+{id:2,c:'dress',nm:'Sovereign Moonphase 38',pr:1890000,sp:1590000,mv:'오토매틱 Cal.RC-92 문페이즈',d:'38mm',w:'5ATM',g:'사파이어 크리스탈',b:71,dt:8},
+{id:3,c:'diver',nm:'Abyss Diver 300',pr:1450000,sp:1250000,mv:'오토매틱 Cal.RC-85',d:'42mm',w:'30ATM',g:'사파이어 크리스탈',b:90,dt:7},
+{id:4,c:'diver',nm:'Meridian Chronograph 42',pr:890000,sp:790000,mv:'쿼츠 메카크롬 크로노그래프',d:'42mm',w:'10ATM',g:'사파이어 크리스탈',b:84,dt:6},
+{id:5,c:'quartz',nm:'Slim Quartz 38',pr:390000,sp:320000,mv:'쿼츠 (배터리 3년)',d:'38mm',w:'10ATM',g:'사파이어 크리스탈',b:95,dt:3},
+{id:6,c:'quartz',nm:'Slate Date 40',pr:450000,sp:0,mv:'쿼츠 데이트 (배터리 3년)',d:'40mm',w:'10ATM',g:'사파이어 크리스탈',b:60,dt:4},
+{id:7,c:'strap',nm:'Italian Calf 가죽 스트랩',pr:120000,sp:98000,mv:'이탈리아산 카프 가죽 · 퀵릴리즈',d:'20 / 22mm',w:'-',g:'-',b:55,dt:2},
+{id:8,c:'strap',nm:'Milanese 메탈 메쉬 스트랩',pr:180000,sp:150000,mv:'316L 스테인리스 · 퀵릴리즈',d:'20 / 22mm',w:'-',g:'-',b:48,dt:1}];
+const SEED=[['kim***',5,'실물이 사진보다 훨씬 좋습니다. 다이얼 질감이 훌륭해요.'],['park***',4,'포장과 보증서가 깔끔했고 착용감이 편합니다.']];
+let users=L('rc_users')||{},me=L('rc_me'),cart=L('rc_cart')||[],rev=L('rc_rev')||{},filt='all',sort='best',D={};
+const pid=id=>P.find(p=>p.id==id),base=p=>p.sp||p.pr,isW=p=>p.c!='strap';
+const unit=(p,o)=>base(p)+(isW(p)?ST[o][1]:0);
+const user=()=>me&&users[me],tt=m=>{const t=$('ts');t.textContent=m;t.style.display='block';clearTimeout(tt.h);tt.h=setTimeout(()=>t.style.display='none',2200)};
+const grade=s=>s>=1500000?{n:'ROYAL VIP',r:.05}:s>=500000?{n:'GOLD',r:.03}:{n:'SILVER',r:.01};
+const avg=id=>{const r=rev[id]||SEED.map(x=>({r:x[1]}));return(r.reduce((a,x)=>a+x.r,0)/r.length).toFixed(1)};
+const stars=n=>'★'.repeat(Math.round(n))+'☆'.repeat(5-Math.round(n));
+/* hero */
+const H=[['시간은 가장 오래 남는<br>사치입니다', '손목 위에서 완성되는 다이얼의 균형.'], ['깊이를 견디는<br>정밀한 설계', '30기압 방수, 다이버 컬렉션.'], ['하루의 격을 정하는<br>단정한 한 줄', '얇고 조용한 미니멀 워치.'], ['스트랩이 바꾸는<br>시계의 표정', '가죽과 메탈, 한 점으로 새로운 시계.']];let hi=0,ht;
+$('hero').innerHTML=H.map((h,i)=>`<div class="sl${i?'':' on'}"><div class="bg"><img src="img/hero${i+1}.jpg" alt="" onerror="this.onerror=null;this.src=ph(${[1,3,5,8][i]},1)"></div><div class="cp"><h2>${h[0]}</h2><p>${h[1]}</p><button class="btn gold" onclick="$('shop').scrollIntoView({behavior:'smooth'})">컬렉션 보기</button></div></div>`).join('')+`<button class="ar l" aria-label="이전" onclick="go(-1)">‹</button><button class="ar r" aria-label="다음" onclick="go(1)">›</button><div class="dots">${H.map((_,i)=>`<i onclick="to(${i})"></i>`).join('')}</div>`;
+function to(i){hi=(i+4)%4;document.querySelectorAll('.sl').forEach((s,k)=>s.classList.toggle('on',k==hi));document.querySelectorAll('.dots i').forEach((s,k)=>s.classList.toggle('on',k==hi));clearInterval(ht);ht=setInterval(()=>to(hi+1),5500)}
+const go=d=>to(hi+d);to(0);
+/* list */
+const card=p=>`<div class="card" onclick="od(${p.id})"><div class="im tl">${im('img/watch'+p.id+'.jpg',p.id)}<i class="gl"></i>${p.sp?`<span class="bd">${Math.round((1-p.sp/p.pr)*100)}% OFF</span>`:''}</div><div class="in"><small>ROYAL CHRONO</small><h4>${p.nm}</h4><small>${p.mv.split(' ')[0]} · ${p.d} · ${p.w}</small><div class="pr" style="margin:6px 0">${p.sp?`<s>${won(p.pr)}</s><em>${Math.round((1-p.sp/p.pr)*100)}%</em>`:''}<b>${won(base(p))}</b></div><small class="st">${stars(avg(p.id))} <span style="color:var(--mut)">${avg(p.id)}</span></small></div></div>`;
+function rg(){$('tabs').innerHTML=CATS.map(c=>`<button class="tab${filt==c[0]?' on':''}" onclick="filt='${c[0]}';rg()">${c[1]}</button>`).join('');
+let a=P.filter(p=>filt=='all'||p.c==filt);a.sort((x,y)=>sort=='best'?y.b-x.b:sort=='new'?y.dt-x.dt:base(x)-base(y));$('grid').innerHTML=a.map(card).join('')}
+$('rank').innerHTML=[...P].sort((a,b)=>b.b-a.b).slice(0,4).map((p,i)=>`<div class="rk" onclick="od(${p.id})"><b>${i+1}</b>${im('img/watch'+p.id+'.jpg',p.id)}<div><small>${p.nm}</small><div class="pr"><b>${won(base(p))}</b></div></div></div>`).join('');rg();
+/* modal */
+const om=h=>{$('mb').className='md';$('mb').innerHTML=`<button class="x" onclick="cm()" aria-label="닫기">×</button>`+h;$('ov').classList.add('on');$('ov').scrollTop=0},cm=()=>$('ov').classList.remove('on');
+const GT=['','transform:scale(1.8);transform-origin:50% 50%','transform:scale(1.8);transform-origin:25% 75%'];
+function od(id,keep){const p=pid(id);if(!keep)D={id,o:0,g:0};const r=rev[id]||SEED.map(x=>({u:x[0],r:x[1],t:x[2],d:'2026-10-02'}));
+om(`<div class="dt"><div><div class="gm" id="gm">${im('img/watch'+id+'.jpg',id,GT[D.g])}</div><div class="th">${[0,1,2].map(k=>`<img class="${D.g==k?'on':''}" src="img/watch${id}.jpg" style="${k?GT[k].replace('transform:scale(1.8);','object-position:'+(k==1?'50% 50%':'25% 75%')+';'):''}" onclick="D.g=${k};od(${id},1)" onerror="this.onerror=null;this.src=ph(${id})" alt="각도 ${k+1}">`).join('')}<img src="" alt="" style="visibility:hidden"></div></div>
+<div><small>ROYAL CHRONO</small><h3 class="t">${p.nm}</h3><div class="st">${stars(avg(id))} <span style="color:var(--mut)">${avg(id)} (${r.length}건)</span></div>
+<div class="pr" style="margin:8px 0">${p.sp?`<s>${won(p.pr)}</s><em>${Math.round((1-p.sp/p.pr)*100)}%</em>`:''}<b id="pp" style="font-size:24px">${won(unit(p,D.o))}</b></div>
+<table><tr><td>무브먼트</td><td>${p.mv}</td></tr><tr><td>케이스 직경</td><td>${p.d}</td></tr><tr><td>방수 등급</td><td>${p.w}</td></tr><tr><td>글래스</td><td>${p.g}</td></tr><tr><td>보증</td><td>2년 공식 보증 + 디지털 보증서</td></tr></table>
+${isW(p)?`<label>스트랩 옵션</label><select onchange="D.o=+this.value;$('pp').textContent=won(${base(p)}+ST[D.o][1])">${ST.map((s,i)=>`<option value="${i}"${D.o==i?' selected':''}>${s[0]}${s[1]?' (+'+won(s[1])+')':''}</option>`).join('')}</select>`:''}
+<div style="display:flex;gap:8px;margin-top:16px"><button class="btn ln" style="flex:1" onclick="ac(${id})">장바구니 담기</button><button class="btn" style="flex:1" onclick="ac(${id},1)">바로 구매</button></div></div></div>
+<h4 style="margin-top:28px">실구매자 후기</h4>${r.map(x=>`<div class="rv"><span class="st">${stars(x.r)}</span> <small>${esc(x.u)} · ${x.d}</small><p>${esc(x.t)}</p>${x.img?`<img src="${x.img}" alt="후기 사진">`:''}</div>`).join('')}
+<div class="rv"><b>후기 작성</b><label>별점</label><select id="rr"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select><label>내용</label><textarea id="rt" rows="3"></textarea><label>사진 (선택)</label><input type="file" id="rf" accept="image/*"><button class="btn" style="margin-top:10px" onclick="sr(${id})">후기 등록</button></div>`)}
+function sr(id){if(!user())return acct();const t=$('rt').value.trim();if(!t)return tt('후기 내용을 입력해주세요.');const f=$('rf').files[0],fin=img=>{const r=rev[id]||SEED.map(x=>({u:x[0],r:x[1],t:x[2],d:'2026-10-02'}));r.unshift({u:user().name,r:+$('rr').value,t,img,d:new Date().toISOString().slice(0,10)});rev[id]=r;S('rc_rev',rev);rg();od(id,1);tt('후기가 등록되었습니다.')};
+if(!f)return fin('');const rd=new FileReader();rd.onload=()=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas'),k=Math.min(1,320/i.width);c.width=i.width*k;c.height=i.height*k;c.getContext('2d').drawImage(i,0,0,c.width,c.height);fin(c.toDataURL('image/jpeg',.7))};i.src=rd.result};rd.readAsDataURL(f)}
+/* cart */
+function ac(id,buy){const p=pid(id),o=isW(p)?D.o||0:0,x=cart.find(c=>c.id==id&&c.o==o);x?x.q++:cart.push({id,o,q:1});S('rc_cart',cart);rc();if(buy){cm();ck0()}else{tt('장바구니에 담았습니다.');}}
+const sub=()=>cart.reduce((a,c)=>a+unit(pid(c.id),c.o)*c.q,0);
+function rc(){$('cn').textContent=cart.reduce((a,c)=>a+c.q,0);$('cb').innerHTML=cart.length?cart.map((c,i)=>{const p=pid(c.id);return`<div class="ci">${im('img/watch'+p.id+'.jpg',p.id)}<div style="flex:1"><b>${p.nm}</b>${isW(p)?`<br><small>${ST[c.o][0]}</small>`:''}<div class="q"><button onclick="cq(${i},-1)">−</button>${c.q}<button onclick="cq(${i},1)">+</button></div></div><div style="text-align:right">${won(unit(p,c.o)*c.q)}<br><button onclick="cart.splice(${i},1);S('rc_cart',cart);rc()" style="background:none;color:var(--mut);font-size:12px">삭제</button></div></div>`}).join('')+`<div class="sum"><p class="big"><span>상품 합계</span><span>${won(sub())}</span></p></div><button class="btn gold" style="width:100%" onclick="ck0()">주문하기</button>`:'<p style="padding:30px 0;color:var(--mut)">담긴 상품이 없습니다. 컬렉션에서 마음에 드는 시계를 담아보세요.</p>'}
+function cq(i,d){cart[i].q+=d;if(cart[i].q<1)cart.splice(i,1);S('rc_cart',cart);rc()}
+const oc=()=>{$('dw').classList.add('on')},cc=()=>$('dw').classList.remove('on');rc();
+/* auth */
+function acct(){if(!user())return om(`<div class="s"><h3 class="t">로그인 / 회원가입</h3><label>이메일</label><input id="ae" type="email"><label>비밀번호</label><input id="ap" type="password"><label>이름 (가입 시)</label><input id="an"><div style="display:flex;gap:8px;margin-top:16px"><button class="btn" style="flex:1" onclick="lg()">로그인</button><button class="btn gold" style="flex:1" onclick="sg()">가입하고 3,000P 받기</button></div></div>`);mp()}
+function sg(){const e=$('ae').value.trim(),p=$('ap').value,n=$('an').value.trim();if(!/\S+@\S+\.\S+/.test(e)||p.length<4||!n)return tt('이메일, 4자 이상 비밀번호, 이름을 입력해주세요.');if(users[e])return tt('이미 가입된 이메일입니다.');users[e]={name:n,pw:p,pts:3000,spent:0,orders:[],cp:0};S('rc_users',users);me=e;S('rc_me',e);ub();cm();tt('가입 축하 3,000P가 지급되었습니다.')}
+function lg(){const e=$('ae').value.trim(),u=users[e];if(!u||u.pw!==$('ap').value)return tt('이메일 또는 비밀번호가 올바르지 않습니다.');me=e;S('rc_me',e);ub();cm();tt(u.name+'님, 환영합니다.')}
+const ub=()=>$('ub').textContent=user()?user().name+'님':'로그인';ub();
+function mp(){const u=user(),g=grade(u.spent),nx=u.spent<500000?[500000,'GOLD']:u.spent<1500000?[1500000,'ROYAL VIP']:null;
+om(`<h3 class="t">마이페이지</h3><p><span class="tg">${g.n}</span> ${esc(u.name)} · 보유 포인트 <b>${won(u.pts).replace('원','P')}</b> · 누적 ${won(u.spent)}</p><p class="sub">적립률 ${g.r*100}%${g.n!='SILVER'?' · 무료 배송':''}${nx?` · ${nx[1]}까지 ${won(nx[0]-u.spent)} 남음`:''}${u.cp?` · 폴리싱·오버홀 쿠폰 ${u.cp}장`:''}</p>
+<h4>주문 내역</h4>${u.orders.length?u.orders.map(o=>`<div class="rv"><b>${o.no}</b> · ${o.date} · ${won(o.fin)}<br>${o.items.map(i=>esc(i)).join(', ')}<br>${o.w.map((w,k)=>`<button class="btn sm ln" onclick="vw('${o.no}',${k})">보증서 ${w.sn}</button> `).join('')}${o.w.length?`<button class="btn sm" onclick="vg()">관리 가이드북</button>`:''}</div>`).join(''):'<p class="sub">아직 주문이 없습니다.</p>'}
+<button class="btn ln" onclick="me=null;S('rc_me',null);ub();cm()">로그아웃</button>`)}
+/* checkout */
+function ck0(){if(!cart.length)return tt('장바구니가 비어 있습니다.');if(!user()){cc();return acct()}cc();const u=user();
+om(`<h3 class="t">주문 / 결제</h3><div class="dt"><div><label>받는 분</label><input id="cn1" value="${esc(u.name)}"><label>연락처</label><input id="cp1" placeholder="010-0000-0000"><label>배송지</label><input id="ca" placeholder="주소와 상세 주소"><label>포인트 사용 (보유 ${u.pts.toLocaleString()}P)</label><div style="display:flex;gap:6px"><input id="up" type="number" min="0" value="0" oninput="ck()"><button class="btn sm ln" style="white-space:nowrap" onclick="$('up').value=${u.pts};ck()">전액</button></div></div>
+<div><b>주문 상품</b>${cart.map(c=>{const p=pid(c.id);return`<p style="font-size:14px">${p.nm}${isW(p)?' / '+ST[c.o][0]:''} × ${c.q}</p>`}).join('')}<div class="sum" id="sm"></div><button class="btn gold" style="width:100%" onclick="pay()">결제 완료하기</button></div></div>`);ck()}
+function ck(){const u=user(),g=grade(u.spent),s=sub(),sh=g.r>.01?0:3000;let use=Math.max(0,Math.min(+$('up').value||0,u.pts,s+sh));const f=s+sh-use;
+$('sm').innerHTML=`<p><span>상품 금액</span><span>${won(s)}</span></p><p><span>배송비 (${sh?'SILVER':g.n+' 무료'})</span><span>${won(sh)}</span></p><p><span>포인트 사용</span><span>−${use.toLocaleString()}P</span></p><p class="big"><span>최종 결제</span><span>${won(f)}</span></p><p style="color:var(--royal)"><span>${g.n} 예정 적립 (${g.r*100}%)</span><span>+${Math.floor(f*g.r).toLocaleString()}P</span></p>`;return{use,f,g}}
+function pay(){if(!$('cn1').value.trim()||!$('cp1').value.trim()||!$('ca').value.trim())return tt('배송 정보를 모두 입력해주세요.');const u=user(),old=grade(u.spent),{use,f,g}=ck(),d=new Date(),ds=d.toISOString().slice(0,10),no='RC'+d.getTime().toString().slice(-8),w=[];
+cart.forEach(c=>{const p=pid(c.id);if(isW(p))for(let k=0;k<c.q;k++)w.push({sn:`RC-${d.getFullYear()}-${String(Math.floor(Math.random()*1e6)).padStart(6,'0')}`,nm:p.nm,opt:ST[c.o][0],mv:p.mv,date:ds})});
+const earn=Math.floor(f*g.r);u.pts+=earn-use;u.spent+=f;const ng=grade(u.spent);if(ng.n=='ROYAL VIP'&&old.n!='ROYAL VIP')u.cp++;
+u.orders.unshift({no,date:ds,fin:f,items:cart.map(c=>pid(c.id).nm+' ×'+c.q),w});S('rc_users',users);cart=[];S('rc_cart',cart);rc();
+om(`<div class="s" style="text-align:center"><h3 class="t">결제가 완료되었습니다</h3><p class="sub">주문번호 ${no} · ${won(f)} 결제 · ${earn.toLocaleString()}P 적립</p>${ng.n!=old.n?`<p><span class="tg">등급 상승: ${ng.n}</span>${ng.n=='ROYAL VIP'?'<br>무상 폴리싱·오버홀 쿠폰이 발급되었습니다.':''}</p>`:''}
+${w.length?`<p style="margin:14px 0">디지털 정품 보증서와 관리 가이드북이 발급되었습니다.</p>${w.map((x,k)=>`<button class="btn gold" style="width:100%;margin-bottom:8px" onclick="vw('${no}',${k})">보증서 보기 · ${x.sn}</button>`).join('')}<button class="btn" style="width:100%;margin-bottom:8px" onclick="vg()">무브먼트 세팅 · 관리 가이드북</button>`:'<p class="sub">스트랩 상품은 보증서 발급 대상이 아닙니다.</p>'}<button class="btn ln" onclick="mp()">마이페이지</button></div>`)}
+function vw(no,k){const u=user(),o=u.orders.find(x=>x.no==no),w=o.w[k],e=new Date(w.date);e.setFullYear(e.getFullYear()+2);
+om(`<div class="wc"><div class="tg">ROYAL CHRONO</div><h4>DIGITAL WARRANTY CARD</h4><div class="sn">${w.sn}</div><table><tr><td>모델</td><td>${w.nm}</td></tr><tr><td>스트랩</td><td>${w.opt}</td></tr><tr><td>무브먼트</td><td>${w.mv}</td></tr><tr><td>구매일</td><td>${w.date}</td></tr><tr><td>보증 기간</td><td>${w.date} ~ ${e.toISOString().slice(0,10)} (2년)</td></tr><tr><td>소유자</td><td>${esc(u.name)}</td></tr></table><small style="color:#94a3b8">본 보증서는 시리얼 번호로 정품 여부와 무상 AS 자격을 증명합니다.</small></div><p style="margin-top:14px;text-align:center"><button class="btn ln sm" onclick="mp()">마이페이지로</button> <button class="btn sm" onclick="vg()">관리 가이드북</button></p>`)}
+function vg(){om(`<h3 class="t">무브먼트 세팅 및 시계 관리 가이드북</h3><div class="gd"><h5>1. 오토매틱 최초 세팅</h5><p>용두를 풀고 시계 방향으로 30~40회 감아 태엽을 충전합니다. 이후 착용만으로 충전됩니다.</p><h5>2. 날짜·시간 맞추기</h5><p>용두를 1단 당겨 날짜, 2단에서 시간을 맞춥니다. 오후 9시~새벽 3시에는 날짜 조정을 피하세요.</p><h5>3. 방수 관리</h5><p>수중에서는 용두 조작과 크로노그래프 버튼 사용을 금지하고, 사용 후 맑은 물로 헹굽니다.</p><h5>4. 자기장·충격</h5><p>스피커, 자석 가방 클립 등과 5cm 이상 떨어뜨려 보관하세요.</p><h5>5. 정기 점검</h5><p>오토매틱은 3~5년마다 오버홀, 쿼츠는 배터리 교체 시 방수 점검을 권장합니다.</p></div>`)}
+
+/* cursor effects */
+if(matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches){document.body.classList.add('fx');
+const r=document.createElement('div'),d=document.createElement('div');r.id='cr';d.id='cd';document.body.append(r,d);let x=innerWidth/2,y=innerHeight/2,rx=x,ry=y,lt=null;
+const rs=e=>{if(e){e.style.transform='';}};
+addEventListener('mousemove',e=>{x=e.clientX;y=e.clientY;d.style.transform=`translate(${x}px,${y}px)`;const T=e.target.closest?e.target:document.body,
+card=T.closest('.card,.rk'),hv=T.closest('button,a,select,input,textarea,.gm,.dots i,.th img');r.classList.toggle('v',!!card&&!T.closest('button'));r.classList.toggle('h',!!hv&&!card);
+const sp=T.closest('[data-spot]');if(sp){const b=sp.getBoundingClientRect();sp.style.setProperty('--mx',x-b.left+'px');sp.style.setProperty('--my',y-b.top+'px');if(sp.id=='hero'){const nx=(x-b.left)/b.width-.5,ny=(y-b.top)/b.height-.5;sp.querySelectorAll('.bg').forEach(g=>g.style.transform=`translate(${-nx*34}px,${-ny*22}px)`)}}
+const tl=T.closest('.tl');if(lt&&lt!==tl)rs(lt);if(tl){const b=tl.getBoundingClientRect(),px=(x-b.left)/b.width,py=(y-b.top)/b.height;tl.style.transform=`perspective(900px) rotateY(${(px-.5)*12}deg) rotateX(${(.5-py)*12}deg) scale(1.02)`;tl.style.setProperty('--gx',px*100+'%');tl.style.setProperty('--gy',py*100+'%')}lt=tl;
+const gm=T.closest('.gm');if(gm){const im=gm.querySelector('img'),b=gm.getBoundingClientRect();if(!im.dataset.t)im.dataset.t=im.style.cssText;im.style.transformOrigin=`${(x-b.left)/b.width*100}% ${(y-b.top)/b.height*100}%`;im.style.transform='scale(2.1)'}
+else document.querySelectorAll('.gm img[data-t]').forEach(im=>{im.style.cssText=im.dataset.t;delete im.dataset.t});
+const bn=T.closest('.btn');if(bn){const b=bn.getBoundingClientRect();bn.style.transform=`translate(${(x-b.left-b.width/2)*.18}px,${(y-b.top-b.height/2)*.28}px)`;lt2=bn}if(typeof lt2!='undefined'&&lt2&&lt2!==bn){lt2.style.transform='';lt2=null}});
+var lt2=null;document.addEventListener('mouseleave',()=>{d.style.opacity=r.style.opacity=0});document.addEventListener('mouseenter',()=>{d.style.opacity=r.style.opacity=1});
+(function f(){rx+=(x-rx)*.16;ry+=(y-ry)*.16;r.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(f)})()}
+</script></body></html>
