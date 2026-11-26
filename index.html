@@ -79,6 +79,7 @@ body.fx #cr{display:flex}#cr.h{width:64px;height:64px;margin:-32px 0 0 -32px;bac
 <div class="ov" id="ov" onclick="if(event.target===this)cm()"><div class="md" id="mb"></div></div>
 <aside class="dw" id="dw"><div style="padding:16px;border-bottom:1px solid var(--ln);display:flex;justify-content:space-between"><b>장바구니</b><button onclick="cc()" style="background:none;font-size:22px">×</button></div><div class="bd2" id="cb"></div></aside>
 <div class="toast" id="ts"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const ph=(id,w)=>{const cx=w?1450:400,cy=400,W=w?2000:800,sc=w?.78:.7,
 M={1:{a:'#3b68a8',b:'#0a1a38',g:'#D4AF37',z:'f',r:'j',t:'#F8FAFC',d:1,c:1,n:'AUTOMATIC  5 ATM'},
@@ -217,4 +218,379 @@ else document.querySelectorAll('.gm img[data-t]').forEach(im=>{im.style.cssText=
 const bn=T.closest('.btn');if(bn){const b=bn.getBoundingClientRect();bn.style.transform=`translate(${(x-b.left-b.width/2)*.18}px,${(y-b.top-b.height/2)*.28}px)`;lt2=bn}if(typeof lt2!='undefined'&&lt2&&lt2!==bn){lt2.style.transform='';lt2=null}});
 var lt2=null;document.addEventListener('mouseleave',()=>{d.style.opacity=r.style.opacity=0});document.addEventListener('mouseenter',()=>{d.style.opacity=r.style.opacity=1});
 (function f(){rx+=(x-rx)*.16;ry+=(y-ry)*.16;r.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(f)})()}
-</script></body></html>
+</script>
+<script>
+/* =========================================================
+   ROYAL CHRONO · Supabase 연결 브리지
+   DB 스키마: shop_profiles / shop_products / shop_orders / shop_order_items
+   ========================================================= */
+(function () {
+  'use strict';
+
+  const SUPABASE_URL = 'https://nqipfxdbbtuibfmyhis.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_Zh--J435wB5J_7Th3CfuDg_PbEkInUP';
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+  let authUser = null;
+  let profile = null;
+  let productsReady = false;
+  let isSubmitting = false;
+
+  // 구버전은 비밀번호를 localStorage에 평문 저장했으므로 해당 회원 저장값만 제거합니다.
+  // 장바구니(rc_cart)와 후기(rc_rev)는 기존처럼 브라우저에 유지합니다.
+  try {
+    localStorage.removeItem('rc_users');
+    localStorage.removeItem('rc_me');
+  } catch (_) {}
+  users = {};
+  me = null;
+
+  function setHeader() {
+    const button = $('ub');
+    if (!button) return;
+    button.textContent = authUser ? ((profile && profile.name) || authUser.email || '회원') + '님' : '로그인';
+    button.onclick = () => window.acct();
+  }
+
+  function fillLegacyUser() {
+    users = {};
+    me = null;
+    if (authUser && authUser.email && profile) {
+      me = authUser.email;
+      users[me] = {
+        id: authUser.id,
+        name: profile.name || authUser.email,
+        phone: profile.phone || '',
+        pts: Number(profile.points || 0),
+        grade: profile.grade || 'WELCOME',
+        role: profile.role || 'member',
+        spent: 0,
+        orders: [],
+        cp: 0
+      };
+    }
+    setHeader();
+  }
+
+  async function readProfile(user) {
+    let lastError = null;
+    // 가입 트리거가 auth.users 생성 직후 실행되므로 프로필 생성 시차를 짧게 재확인합니다.
+    for (let i = 0; i < 5; i++) {
+      const result = await db.from('shop_profiles')
+        .select('id,email,name,phone,grade,points,role,created_at')
+        .eq('id', user.id)
+        .maybeSingle();
+      if (result.data) return result.data;
+      lastError = result.error;
+      await new Promise(resolve => setTimeout(resolve, 350));
+    }
+    if (lastError) throw lastError;
+    throw new Error('회원 프로필을 찾지 못했습니다. shop_handle_new_user 트리거와 shop_profiles 표를 확인해 주세요.');
+  }
+
+  async function applySession(user) {
+    authUser = user || null;
+    profile = null;
+    if (!authUser) {
+      fillLegacyUser();
+      return;
+    }
+    try {
+      profile = await readProfile(authUser);
+    } catch (error) {
+      fillLegacyUser();
+      console.error('Supabase profile load failed:', error);
+      tt('로그인은 되었지만 회원 정보를 읽지 못했습니다. shop_profiles의 RLS 정책을 확인해 주세요.');
+      return;
+    }
+    fillLegacyUser();
+  }
+
+  async function loadProducts() {
+    const { data, error } = await db.from('shop_products')
+      .select('id,name,category,price,stock,image_url,is_active')
+      .eq('is_active', true)
+      .order('id', { ascending: true });
+
+    if (error) {
+      console.error('Product load failed:', error);
+      productsReady = false;
+      tt('상품 DB를 읽지 못했습니다. shop_products의 RLS와 데이터 API 설정을 확인해 주세요.');
+      return;
+    }
+
+    const rows = data || [];
+    const expected = P.length === 8 && rows.length === 8 && rows.every((row, index) => Number(row.id) === index + 1);
+    const placeholders = rows.some(row => String(row.name || '').startsWith('예시 상품'));
+
+    if (!expected || placeholders) {
+      productsReady = false;
+      tt('Supabase 상품 표에 ROYAL CHRONO 상품 8개를 먼저 등록해야 주문할 수 있습니다.');
+      return;
+    }
+
+    rows.forEach(row => {
+      const item = P.find(product => product.id === Number(row.id));
+      if (!item) return;
+      item.nm = row.name;
+      item.c = row.category;
+      item.sp = Number(row.price) < Number(item.pr) ? Number(row.price) : 0;
+      item.stock = Number(row.stock || 0);
+      item.active = !!row.is_active;
+      item.image_url = row.image_url || '';
+    });
+
+    productsReady = true;
+    window.rg();
+    renderRank();
+  }
+
+  function renderRank() {
+    const active = P.filter(item => item.active !== false);
+    $('rank').innerHTML = [...active].sort((a, b) => b.b - a.b).slice(0, 4)
+      .map((p, i) => `<div class="rk" onclick="od(${p.id})"><b>${i + 1}</b>${im('img/watch' + p.id + '.jpg', p.id)}<div><small>${esc(p.nm)}</small><div class="pr"><b>${won(base(p))}</b></div></div></div>`).join('');
+  }
+
+  window.rg = function () {
+    $('tabs').innerHTML = CATS.map(c => `<button class="tab${filt == c[0] ? ' on' : ''}" onclick="filt='${c[0]}';rg()">${c[1]}</button>`).join('');
+    let items = P.filter(p => p.active !== false && (filt === 'all' || p.c === filt));
+    items.sort((a, b) => sort === 'best' ? b.b - a.b : sort === 'new' ? b.dt - a.dt : base(a) - base(b));
+    $('grid').innerHTML = items.map(p => `<div class="card" onclick="od(${p.id})"><div class="im tl">${im('img/watch' + p.id + '.jpg', p.id)}<i class="gl"></i>${p.sp ? `<span class="bd">${Math.round((1 - p.sp / p.pr) * 100)}% OFF</span>` : ''}</div><div class="in"><small>ROYAL CHRONO</small><h4>${esc(p.nm)}</h4><small>${esc(p.mv.split(' ')[0])} · ${p.d} · ${p.w}</small><div class="pr" style="margin:6px 0">${p.sp ? `<s>${won(p.pr)}</s><em>${Math.round((1 - p.sp / p.pr) * 100)}%</em>` : ''}<b>${won(base(p))}</b></div><small class="st">${stars(avg(p.id))} <span style="color:var(--mut)">${avg(p.id)}</span></small></div></div>`).join('');
+  };
+
+  // DB의 category는 dress/diver/quartz/strap 코드로 저장합니다.
+  window.ac = function (id, buy) {
+    if (!productsReady) return tt('상품 DB 등록을 먼저 완료해 주세요.');
+    const p = pid(id);
+    if (!p || p.active === false) return tt('판매 중인 상품이 아닙니다.');
+    const option = isW(p) ? (D.o || 0) : 0;
+    const existing = cart.find(c => c.id == id);
+    // shop_order_items의 기본키는 (order_id, product_id)이므로 같은 상품의 옵션 중복은 한 주문에 담지 않습니다.
+    if (existing && existing.o !== option) return tt('같은 상품은 한 주문에서 옵션 하나만 선택할 수 있습니다.');
+    const found = cart.find(c => c.id == id && c.o == option);
+    if (found) found.q++;
+    else cart.push({ id, o: option, q: 1 });
+    S('rc_cart', cart);
+    rc();
+    if (buy) { cm(); window.ck0(); }
+    else tt('장바구니에 담았습니다.');
+  };
+
+  window.acct = function () {
+    if (authUser && profile) return window.mp();
+    om(`<div class="s"><h3 class="t">로그인 / 회원가입</h3><label>이메일</label><input id="ae" type="email" autocomplete="email"><label>비밀번호</label><input id="ap" type="password" autocomplete="current-password"><label>이름 (가입 시)</label><input id="an" autocomplete="name"><label>연락처 (가입 시)</label><input id="aph" type="tel" placeholder="010-0000-0000" autocomplete="tel"><p style="font-size:12px;color:var(--mut);margin-top:10px">가입 시 3,000P가 DB에 자동 지급됩니다.</p><div style="display:flex;gap:8px;margin-top:16px"><button class="btn" style="flex:1" onclick="lg()">로그인</button><button class="btn gold" style="flex:1" onclick="sg()">가입하고 3,000P 받기</button></div></div>`);
+  };
+
+  window.sg = async function () {
+    const email = $('ae').value.trim();
+    const password = $('ap').value;
+    const name = $('an').value.trim();
+    const phone = $('aph').value.trim();
+    if (!/^\S+@\S+\.\S+$/.test(email) || password.length < 6 || !name || !phone) {
+      return tt('이메일, 6자 이상 비밀번호, 이름, 연락처를 모두 입력해 주세요.');
+    }
+    const { data, error } = await db.auth.signUp({
+      email,
+      password,
+      options: { data: { name, phone } }
+    });
+    if (error) {
+      console.error('Sign up failed:', error);
+      return tt(error.message || '회원가입에 실패했습니다.');
+    }
+    if (data.session) {
+      await applySession(data.user);
+      cm();
+      tt('회원가입 완료! 3,000P가 지급되었습니다.');
+    } else {
+      tt('가입 요청이 완료되었습니다. 이메일 확인 설정을 확인해 주세요.');
+    }
+  };
+
+  window.lg = async function () {
+    const email = $('ae').value.trim();
+    const password = $('ap').value;
+    if (!email || !password) return tt('이메일과 비밀번호를 입력해 주세요.');
+    const { data, error } = await db.auth.signInWithPassword({ email, password });
+    if (error) {
+      console.error('Sign in failed:', error);
+      return tt('로그인 실패: 이메일 또는 비밀번호를 확인해 주세요.');
+    }
+    await applySession(data.user);
+    cm();
+    tt((profile && profile.name ? profile.name : email) + '님, 환영합니다.');
+  };
+
+  window.logoutShop = async function () {
+    const { error } = await db.auth.signOut();
+    if (error) return tt('로그아웃에 실패했습니다. 다시 시도해 주세요.');
+    authUser = null;
+    profile = null;
+    fillLegacyUser();
+    cm();
+    tt('로그아웃되었습니다.');
+  };
+
+  function gradeText(value) {
+    return ({ WELCOME: 'WELCOME', SILVER: 'SILVER', GOLD: 'GOLD', VIP: 'ROYAL VIP' })[value] || value || 'WELCOME';
+  }
+
+  async function fetchOrders() {
+    const { data: orders, error } = await db.from('shop_orders')
+      .select('id,total,status,created_at')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    const list = orders || [];
+    if (!list.length) return [];
+    const ids = list.map(order => order.id);
+    const { data: items, error: itemError } = await db.from('shop_order_items')
+      .select('order_id,product_id,qty,unit_price')
+      .in('order_id', ids);
+    if (itemError) throw itemError;
+    return list.map(order => ({
+      ...order,
+      items: (items || []).filter(item => item.order_id === order.id)
+    }));
+  }
+
+  window.mp = async function () {
+    if (!authUser || !profile) return window.acct();
+    let orders = [];
+    try {
+      orders = await fetchOrders();
+    } catch (error) {
+      console.error('Order history load failed:', error);
+      tt('주문 내역을 불러오지 못했습니다.');
+    }
+    const orderHtml = orders.length ? orders.map(order => {
+      const date = new Date(order.created_at).toLocaleString('ko-KR');
+      const names = order.items.map(item => {
+        const p = pid(Number(item.product_id));
+        return `${p ? esc(p.nm) : '상품 #' + item.product_id} × ${item.qty} (${won(Number(item.unit_price))})`;
+      }).join('<br>') || '상품 상세 없음';
+      return `<div class="rv"><b>주문번호 #${order.id}</b><br><small>${date} · ${esc(order.status)}</small><p style="margin:6px 0">${names}</p><b>${won(Number(order.total))}</b></div>`;
+    }).join('') : '<p class="sub">아직 주문이 없습니다.</p>';
+    const roleBadge = profile.role === 'admin' ? '<span class="tg">ADMIN</span>' : '';
+    om(`<h3 class="t">마이페이지</h3><p>${roleBadge} <span class="tg">${gradeText(profile.grade)}</span> ${esc(profile.name || authUser.email)}</p><p class="sub">${esc(authUser.email)} · 보유 포인트 <b>${Number(profile.points || 0).toLocaleString('ko-KR')}P</b></p><h4>회원 정보</h4><label>이름</label><input id="profileName" value="${esc(profile.name || '')}"><label>연락처</label><input id="profilePhone" value="${esc(profile.phone || '')}"><button class="btn sm" style="margin-top:12px" onclick="saveProfile()">회원 정보 저장</button><h4 style="margin-top:28px">주문 내역</h4>${orderHtml}<button class="btn ln" style="margin-top:20px" onclick="logoutShop()">로그아웃</button>`);
+  };
+
+  window.saveProfile = async function () {
+    if (!authUser) return window.acct();
+    const name = $('profileName').value.trim();
+    const phone = $('profilePhone').value.trim();
+    if (!name || !phone) return tt('이름과 연락처를 입력해 주세요.');
+    const { data, error } = await db.from('shop_profiles')
+      .update({ name, phone })
+      .eq('id', authUser.id)
+      .select('id,email,name,phone,grade,points,role,created_at')
+      .single();
+    if (error) {
+      console.error('Profile update failed:', error);
+      return tt('회원 정보 저장에 실패했습니다.');
+    }
+    profile = data;
+    fillLegacyUser();
+    tt('회원 정보가 저장되었습니다.');
+    window.mp();
+  };
+
+  window.ck0 = function () {
+    if (!cart.length) return tt('장바구니가 비어 있습니다.');
+    if (!authUser || !profile) { cc(); return window.acct(); }
+    if (!productsReady) return tt('상품 DB 등록을 먼저 완료해 주세요.');
+    cc();
+    const u = user();
+    om(`<h3 class="t">주문 확인</h3><div class="dt"><div><label>받는 분</label><input id="cn1" value="${esc(u.name)}"><label>연락처</label><input id="cp1" value="${esc(u.phone || '')}" placeholder="010-0000-0000"><p style="font-size:12px;color:var(--mut);margin-top:14px">이번 실습 DB에는 배송지 열이 없어 배송 주소는 저장하지 않습니다.</p></div><div><b>주문 상품</b>${cart.map(c => { const p = pid(c.id); return `<p style="font-size:14px">${esc(p.nm)}${isW(p) ? ' / ' + esc(ST[c.o][0]) : ''} × ${c.q}</p>`; }).join('')}<div class="sum" id="sm"></div><button class="btn gold" style="width:100%" onclick="pay()">주문 저장하기</button></div></div>`);
+    window.ck();
+  };
+
+  window.ck = function () {
+    const total = sub();
+    $('sm').innerHTML = `<p><span>상품 금액</span><span>${won(total)}</span></p><p class="big"><span>주문 합계</span><span>${won(total)}</span></p><p style="font-size:12px;color:var(--mut)">포인트 ${Number(profile && profile.points || 0).toLocaleString('ko-KR')}P · 이번 SQL 구조에서는 주문 시 포인트 사용/적립을 자동 반영하지 않습니다.</p>`;
+    return total;
+  };
+
+  window.pay = async function () {
+    if (isSubmitting) return;
+    if (!authUser || !profile) return window.acct();
+    const receiver = $('cn1').value.trim();
+    const phone = $('cp1').value.trim();
+    if (!receiver || !phone) return tt('받는 분과 연락처를 입력해 주세요.');
+
+    // 같은 상품 ID가 다른 옵션으로 중복되면 shop_order_items의 복합 기본키와 충돌하므로 저장 전에 막습니다.
+    const uniqueIds = new Set(cart.map(item => item.id));
+    if (uniqueIds.size !== cart.length) return tt('같은 상품의 옵션을 하나로 정리한 뒤 주문해 주세요.');
+    for (const item of cart) {
+      const p = pid(item.id);
+      if (!p || p.active === false || !Number.isInteger(item.q) || item.q < 1) return tt('주문 상품 정보를 확인해 주세요.');
+    }
+
+    isSubmitting = true;
+    const button = document.querySelector('#mb button[onclick="pay()"]');
+    if (button) { button.disabled = true; button.textContent = '주문 저장 중...'; }
+    try {
+      // SQL에서 회원 본인이 수정할 수 있도록 허용한 열(name, phone)만 갱신합니다.
+      const { data: updatedProfile, error: profileError } = await db.from('shop_profiles')
+        .update({ name: receiver, phone })
+        .eq('id', authUser.id)
+        .select('id,email,name,phone,grade,points,role,created_at')
+        .single();
+      if (profileError) throw profileError;
+      profile = updatedProfile;
+      fillLegacyUser();
+
+      const total = window.ck();
+      const { data: order, error: orderError } = await db.from('shop_orders')
+        .insert({ total })
+        .select('id,total,status,created_at')
+        .single();
+      if (orderError) throw orderError;
+
+      const itemRows = cart.map(item => ({
+        order_id: order.id,
+        product_id: item.id,
+        qty: item.q,
+        unit_price: unit(pid(item.id), item.o)
+      }));
+      const { error: itemsError } = await db.from('shop_order_items').insert(itemRows);
+      if (itemsError) {
+        console.error('Order header saved but order items failed:', itemsError);
+        throw new Error(`주문 번호 #${order.id}는 만들어졌지만 상품 상세 저장에 실패했습니다: ${itemsError.message}`);
+      }
+
+      cart = [];
+      S('rc_cart', cart);
+      rc();
+      om(`<div class="s" style="text-align:center"><h3 class="t">주문이 저장되었습니다</h3><p class="sub">주문번호 #${order.id} · ${won(Number(order.total))}</p><p>주문 데이터가 Supabase의 <b>shop_orders</b>와 <b>shop_order_items</b>에 저장되었습니다.</p><p style="font-size:12px;color:var(--mut);margin:14px 0">현재 실습 SQL에는 실제 카드 결제, 배송지 저장, 포인트 차감/적립 기능이 포함되어 있지 않습니다.</p><button class="btn gold" onclick="mp()">마이페이지에서 주문 확인</button></div>`);
+      tt('Supabase 주문 저장 완료!');
+    } catch (error) {
+      console.error('Checkout failed:', error);
+      tt(error.message || '주문 저장 중 오류가 발생했습니다.');
+      if (button) { button.disabled = false; button.textContent = '주문 저장하기'; }
+    } finally {
+      isSubmitting = false;
+    }
+  };
+
+  async function start() {
+    try {
+      const { data, error } = await db.auth.getSession();
+      if (error) throw error;
+      await applySession(data.session ? data.session.user : null);
+      await loadProducts();
+      rc();
+    } catch (error) {
+      console.error('Supabase initialization failed:', error);
+      tt('Supabase 연결에 실패했습니다. URL, Publishable key, 네트워크를 확인해 주세요.');
+    }
+  }
+
+  db.auth.onAuthStateChange((event, session) => {
+    // Auth 콜백 안에서 직접 DB 요청을 하지 않도록 다음 작업 큐에서 실행합니다.
+    Promise.resolve().then(() => applySession(session ? session.user : null));
+  });
+
+  start();
+})();
+</script>
+</body></html>
